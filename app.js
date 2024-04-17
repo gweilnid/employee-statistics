@@ -194,15 +194,43 @@ function getRandomInt(min, max) {
     //console.log(oldestEmployee);
     return getAge(oldestEmployee.birthdate);
   }
-  function sortByBirthday(employees){
-    let employeesTemp = employees;
-    employeesTemp.sort((a, b) => new Date(a) - new Date(b));
-    console.log(employeesTemp);
-    return 42;
+  function getMedianAge(employees){
+    employees.sort((a, b) => new Date(a.birthdate) - new Date(b.birthdate));
+    //console.log(employees);
+    if(employees.length % 2 == 1) return getAge(employees[Math.floor(employees.length/2)].birthdate);
+    else if(employees.length % 2 == 0){
+      const beforeNum = getAge(employees[(employees.length/2) - 1].birthdate);
+      const afterNum = getAge(employees[(employees.length/2)].birthdate);
+      return ((beforeNum+afterNum)/2).toFixed(1);
+    }
+  }
+
+  function getFemaleEmployeeWorkload(employees){
+    let filtered = employees.filter(employee => employee.gender === "female");
+    if(filtered.length == 0) return 0;
+    //console.log(filtered);
+    const total = filtered.reduce((sum, emp) => (sum + emp.workload), 0);
+    return (total/filtered.length).toFixed(1);
+  }
+
+  function sortByWorkload(employees){
+    return employees.sort((a, b) => a.workload - b.workload);
+  }
+
+  function getMedianWorkload(employees){
+    let sorted = sortByWorkload(employees);
+    //console.log(sorted);
+    if(sorted.length % 2 == 1) return (sorted[Math.floor(sorted.length/2)].workload);
+    else if(sorted.length % 2 == 0){
+      const beforeNum = sorted[(sorted.length/2) - 1].workload;
+      const afterNum = sorted[(sorted.length/2)].workload;
+      return ((beforeNum+afterNum)/2).toFixed(1);
+    }
   }
 
   function getEmployeeStatistics(employees){
     let statistics = [];
+    //console.log(sortedEmployees);
     statistics.push({
         total: countEmployees(employees),
         workload10: countWorkload(10, employees),
@@ -212,8 +240,12 @@ function getRandomInt(min, max) {
         averageAge: getAverageAge(employees),
         minAge: getMinAge(employees),
         maxAge: getMaxAge(employees),
-        medianAge: sortByBirthday(employees),
-    })
+        medianAge: getMedianAge(employees),
+        medianWorkload : getMedianWorkload(employees),
+        averageWomenWorkload: getFemaleEmployeeWorkload(employees),
+        sortedByWorkload: sortByWorkload(employees),
+    });
+    //console.log(statistics);
     return statistics;
   }
 
@@ -223,12 +255,12 @@ function getRandomInt(min, max) {
     if(employees.length == 0) return dtoOut;
     
     dtoOut = getEmployeeStatistics(employees);
-    console.log(dtoOut);
+    console.log(JSON.stringify(dtoOut, null, 2));
     return dtoOut;
   }
 
   const dtoIn = {
-    count: 50,
+    count: 6,
     age: {
       min: 19,
       max: 35
