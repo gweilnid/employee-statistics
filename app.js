@@ -1,3 +1,14 @@
+/**
+ * This script is for generating random employees and creating statistics about employees data.
+ * It includes functions to:
+ * - Randomly generate integer values within a specified range
+ * - Select genders, names, and surnames for employees randomly
+ * - Calculate ages based on birthdays and handle edge date cases
+ * - Generate birthdates in a specific age range and adjusts them into valid interval
+ * - Calculate statistics such as average age, minimum and maximum age, median age, workload distribution
+ * - Sorts and filters employee data based on workload and other parameters
+ */
+
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 function getRandomInt(min, max) {
   // I add +1 to adjust the interval from [min, max) to [min, max]
@@ -72,7 +83,7 @@ function getBirthday(minYear, maxYear) {
   return birthday.toISOString();
 }
 
-// Selects a random female name from
+// Selects a random female name from array
 function getFemaleName() {
   const femaleNames = [
     "Natálie", "Jana", "Eva", "Anna", "Hana", "Lenka", "Kateřina", "Věra", "Lucie", "Tereza",
@@ -85,7 +96,7 @@ function getFemaleName() {
   return femaleNames[getRandomInt(0, femaleNames.length - 1)];
 }
 
-// Selects a random female surname
+// Selects a random female surname from array
 function getFemaleSurname() {
   const femaleSurnames = [
     "Nováková", "Svobodová", "Novotná", "Dvořáková", "Černá", "Procházková", "Kučerová", "Veselá", "Horáková", "Němcová",
@@ -98,7 +109,7 @@ function getFemaleSurname() {
   return femaleSurnames[getRandomInt(0, femaleSurnames.length - 1)];
 }
 
-// Selects a random male name
+// Selects a random male name from array
 function getMaleName() {
   const maleNames = [
     "Jiří", "Jan", "Petr", "Josef", "Pavel", "Martin", "Jaroslav", "Tomáš", "Miroslav", "František",
@@ -111,7 +122,7 @@ function getMaleName() {
   return maleNames[getRandomInt(0, maleNames.length - 1)];
 }
 
-// Selects a random male surname
+// Selects a random male surname from array
 function getMaleSurname() {
   const maleSurnames = [
     "Novák", "Svoboda", "Novotný", "Dvořák", "Černý", "Procházka", "Kučera", "Veselý", "Horák", "Němec",
@@ -195,7 +206,7 @@ function getAge(birthdate) {
 
   return age;
 }
-// Gets total age of the all employees and divides into number of the employees = average age
+// Gets total age of all employees and divides into number of the employees = average age
 function getAverageAge(employees) {
   if (employees.length === 0) return "0.0";
   // 0 sets ageSum into 0
@@ -206,18 +217,24 @@ function getAverageAge(employees) {
 
 // Reduce the array to a single employee object with the earliest birthdate
 function getMinAge(employees) {
-  const youngestEmployee = employees.reduce((currentYoungest, currentEmployee) => 
-  (new Date(currentYoungest.birthdate) > new Date(currentEmployee.birthdate) ? currentYoungest : currentEmployee));
-  //console.log(youngestEmployee);
-  return getAge(youngestEmployee.birthdate);
+  if(employees.length != 0){
+    const youngestEmployee = employees.reduce((currentYoungest, currentEmployee) => 
+    (new Date(currentYoungest.birthdate) > new Date(currentEmployee.birthdate) ? currentYoungest : currentEmployee));
+    //console.log(youngestEmployee);
+    return getAge(youngestEmployee.birthdate);
+  }
+  else throw Error("Empty array.");
 }
 
 // Reduce the array to a single employee object with the latest birthdate
 function getMaxAge(employees) {
-  const oldestEmployee = employees.reduce((currentOldest, currentEmployee) => 
-  (new Date(currentOldest.birthdate) < new Date(currentEmployee.birthdate) ? currentOldest : currentEmployee));
-  //console.log(oldestEmployee);
-  return getAge(oldestEmployee.birthdate);
+  if(employees.length != 0){
+    const oldestEmployee = employees.reduce((currentOldest, currentEmployee) => 
+    (new Date(currentOldest.birthdate) < new Date(currentEmployee.birthdate) ? currentOldest : currentEmployee));
+    //console.log(oldestEmployee);
+    return getAge(oldestEmployee.birthdate);
+  }
+  else throw Error("Empty array.");  
 }
 
 // Sorts employees by birthdates and then applies median formula
@@ -229,7 +246,7 @@ function getMedianAge(employees) {
     // -1 for the correct index
     const beforeNum = getAge(employees[(employees.length / 2) - 1].birthdate);
     const afterNum = getAge(employees[(employees.length / 2)].birthdate);
-    return ((beforeNum + afterNum) / 2).toFixed(1);
+    return ((beforeNum + afterNum) / 2);
   }
 }
 
@@ -238,8 +255,8 @@ function getFemaleEmployeeAvgWorkload(employees) {
   let filtered = employees.filter(employee => employee.gender === "female");
   if (filtered.length == 0) return 0;
   //console.log(filtered);
-  const total = filtered.reduce((sum, emp) => (sum + emp.workload), 0);
-  return (total / filtered.length).toFixed(1);
+  const total = filtered.reduce((workloadSum, employee) => (workloadSum + employee.workload), 0);
+  return (total / filtered.length);
 }
 
 // Sorts employees by workload
@@ -256,7 +273,7 @@ function getMedianWorkload(employees) {
     // -1 for the correct index
     const beforeNum = sorted[(sorted.length / 2) - 1].workload;
     const afterNum = sorted[(sorted.length / 2)].workload;
-    return ((beforeNum + afterNum) / 2).toFixed(1);
+    return ((beforeNum + afterNum) / 2);
   }
 }
 
@@ -317,7 +334,7 @@ console.assert(countWorkload(20, testEmployeesWithGender) === 2, 'Workload calcu
 console.assert(countWorkload(30, testEmployeesWithGender) === 2, 'Workload calculation error');
 console.assert(countWorkload(40, testEmployeesWithGender) === 1, 'Workload calculation error');
 
-console.assert(getFemaleEmployeeAvgWorkload(testEmployeesWithGender) === '30.0', 'Expected average to be 30');
+console.assert(getFemaleEmployeeAvgWorkload(testEmployeesWithGender) === 30, 'Expected average to be 30');
 
 const testEmployees = [
   {birthdate: '1990-01-01'},
@@ -336,7 +353,20 @@ console.assert(getMedianAge(testEmployees) === 34, 'Median age error');
 
 // For even length array
 testEmployees.push({birthdate: '1995-01-01'});
-const medianAgeForEven = ((getAge('1990-01-01') + getAge('1995-01-01')) / 2).toFixed(1);
-console.assert(getMedianAge(testEmployees) === medianAgeForEven, 'Median age error');
+console.assert(getMedianAge(testEmployees) === 31.5, 'Median age error');
 
-console.log("Tests end sucessfuly.");
+try {
+  getMinAge([]);
+  console.error("Empty array did not throw an error on getMinAge.");
+} catch (error) {
+  console.log("Error for empty array on getMinAge.", error.message);
+}
+
+try {
+  getMaxAge([]);
+  console.error("Empty array did not throw an error on getMaxAge.");
+} catch (error) {
+  console.log("Error for empty array on getMaxAge.", error.message);
+}
+
+
