@@ -96,17 +96,18 @@
      - Pro každý index od 0 do count - 1:
      - Získej pohlaví let gender = getGender();
      - Inicializuj let name, surname;
-     - Pokud pohlaví je žena (gender === "female") {
+     - Pokud pohlaví je žena 
+        (gender === "female") {
         potom name = getFemaleName();
-              surname = getFemaleSurname();
+        surname = getFemaleSurname();
       }
       Jinak {
         name = getMaleName();
         surname = getMaleSurname();
       }
 
-    - Vytvoř objekt employee a přidej ho do seznamu employees.
-      employee = {
+     -Vytvoř objekt employee a přidej ho do seznamu employees.
+     - employee = {
         gender: gender,
         Získej datum narození birthdate: getBirthday(minAge, maxAge),
         name: name,
