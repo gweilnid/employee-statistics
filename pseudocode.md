@@ -8,7 +8,7 @@
 #### 1. `getRandomInt(min, max)`
    - **Účel**: Vypočítá náhodné celé číslo v intervalu [min, max].
    - **Proces**:
-     - Inicializace proměnné let DELTA 1;
+     - Inicializace proměnné DELTA která nám umožní generovat číslo v celém intervalu
      - Inicializuj rozsah jako `max - min + DELTA`.
      - Generuj náhodné číslo v rozsahu
      - Vrať `náhodné číslo`.
@@ -216,5 +216,4 @@
      - Generuj zaměstnance `generateEmployeeData`.
      - Pokud se nevygeneroval žádný zaměstnanec tak vrať prázdný dtoOut
      - Generuj statistiky pomocí `getEmployeeStatistics`.
-     - Vypiš výsledek pomocí stringify protože console log má max hloubku ponoření 2.
      - Vrať výsledek
