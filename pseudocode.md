@@ -10,7 +10,7 @@
    - **Proces**:
      - Inicializace proměnné let DELTA 1;
      - Inicializuj rozsah jako `max - min + DELTA`.
-     - Generuj náhodné číslo: `Math.floor(Math.random() * rozsah) + min`.
+     - Generuj náhodné číslo v rozsahu
      - Vrať `náhodné číslo`.
 
 #### 2. `getGender()`
@@ -18,7 +18,7 @@
    - **Proces**:
      - Vytvoř pole pohlaví s hodnotami `["female", "male"]`.
      - Vyber index
-     - Vrať `pohlaví[index]`.
+     - Vrať `gender[index]`.
 
 #### 3. `isLeapYear(year)`
    - **Účel**: Zjistit jestli rok je přestupný nebo ne.
@@ -86,11 +86,11 @@
    - **Účel**: Generuje seznam zaměstnanců podle parametrů
    - **Proces**:
      - Inicializace proměnných:
-        let count = dtoIn.count;
-        let minAge = dtoIn.age.min;
-        let maxAge = dtoIn.age.max;
-        let employee = {};
-        let employees = [];
+          -  let count = dtoIn.count;
+          -  let minAge = dtoIn.age.min;
+          -  let maxAge = dtoIn.age.max;
+          -  let employee = {};
+          -  let employees = [];
      - Pokud `count < 0`, vyhoď chybu "Zadejte kladné číslo.".
      - Pokud `minAge < 18` nebo `minAge > maxAge`, vyhoď chybu "Neplatný věkový intervál.".
      - Pro každý index od 0 do count - 1:
@@ -98,21 +98,22 @@
      - Inicializuj let name, surname;
      - Pokud pohlaví je žena 
         (gender === "female") {
-        potom name = getFemaleName();
-        surname = getFemaleSurname();
+        - potom použij funkce pro generování ženských jmen a příjmení
+        - name = getFemaleName();
+        - surname = getFemaleSurname();
       }
-     - Jinak {
-        name = getMaleName();
-        surname = getMaleSurname();
+     - Jinak generuj mužská jména příjmení{
+        - name = getMaleName();
+        - surname = getMaleSurname();
       }
 
      -Vytvoř objekt employee a přidej ho do seznamu employees.
      - employee = {
-        gender: gender,
-        Získej datum narození birthdate: getBirthday(minAge, maxAge),
-        name: name,
-        surname: surname,
-        Získej zátěž práce  workload: getWorkload()
+        - gender: gender,
+        - Získej datum narození birthdate: getBirthday(minAge, maxAge),
+        - name: name,
+        - surname: surname,
+        - Získej zátěž práce  workload: getWorkload()
       };
 
      - Vrať employees
@@ -194,15 +195,18 @@
    - **Proces**:
      - Inicializace: let statistics = [];
      - Naplň pole `statistics`:
-       - Celkový počet zaměstnanců použitím countEmployees(employees) .
-       - Počet zaměstnanců s workload 10 použitím countWorkload(10, employees).
-       - Počet zaměstnanců s workload 20 použitím countWorkload(20, employees)
-       - Počet zaměstnanců s workload 30 použitím countWorkload(20, employees)
-       - Počet zaměstnanců s workload 40 použitím countWorkload(30, employees)
-       - Průměrný, minimální, maximální a medián věku.
-       - Medián workload.
-       - Průměrný workload žen.
-       - Pole zaměstnanců seřazených podle workload
+       - Celkový počet zaměstnanců použitím countEmployees() .
+       - Počet zaměstnanců s workload 10 použitím countWorkload().
+       - Počet zaměstnanců s workload 20 použitím countWorkload()
+       - Počet zaměstnanců s workload 30 použitím countWorkload()
+       - Počet zaměstnanců s workload 40 použitím countWorkload()
+       - Průměrný věk zaměstnanců getAverageAge()
+       - Minimální věk mezi zaměstnanci getMinAge()
+       - Maximální věk mezi zaměstnanci getMaxAge()
+       - Medián věku mezi zaměstnanci getMedianAge()
+       - Medián workload zaměstnanců getMedianWorkload()
+       - Průměrný workload žen getFemaleEmployeeAvgWorkload()
+       - Pole zaměstnanců seřazených podle workload sortByWorkload()
      - Vrať `statistics`.
 
 #### 24. `main(dtoIn)`
