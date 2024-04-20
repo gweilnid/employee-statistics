@@ -94,8 +94,26 @@
      - Pokud `count < 0`, vyhoď chybu "Zadejte kladné číslo.".
      - Pokud `minAge < 18` nebo `minAge > maxAge`, vyhoď chybu "Neplatný věkový intervál.".
      - Pro každý index od 0 do count - 1:
-       - Získej pohlaví, jméno, příjmení, datum narození a pracovní zátěž.
-       - Vytvoř objektemployee a přidej ho do seznamu employees.
+     - Získej pohlaví let gender = getGender();
+     - Inicializuj let name, surname;
+     - Pokud pohlaví je žena (gender === "female") {
+        potom name = getFemaleName();
+              surname = getFemaleSurname();
+      }
+      Jinak {
+        name = getMaleName();
+        surname = getMaleSurname();
+      }
+
+    - Vytvoř objekt employee a přidej ho do seznamu employees.
+      employee = {
+        gender: gender,
+        Získej datum narození birthdate: getBirthday(minAge, maxAge),
+        name: name,
+        surname: surname,
+        Získej zátěž práce  workload: getWorkload()
+      };
+
      - Vrať employees
 
 #### 13. `countEmployees(employees)`
