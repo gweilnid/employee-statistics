@@ -101,7 +101,7 @@
         potom name = getFemaleName();
         surname = getFemaleSurname();
       }
-      Jinak {
+     - Jinak {
         name = getMaleName();
         surname = getMaleSurname();
       }
